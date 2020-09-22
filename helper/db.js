@@ -1,4 +1,4 @@
-const { connect } = require("mongoose");
+import mongoose from "mongoose";
 
 const connectDb = async () => {
   const { DB_PASSWORD, DB_NAME } = process.env;
@@ -7,7 +7,7 @@ const connectDb = async () => {
     useUnifiedTopology: true,
   };
   try {
-    await connect(
+    await mongoose.connect(
       `mongodb+srv://admin:${DB_PASSWORD}@cluster0.rxd7j.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`,
       options
     );
@@ -18,4 +18,5 @@ const connectDb = async () => {
   }
 };
 
-module.exports = connectDb;
+// module.exports = connectDb;
+export default connectDb;
