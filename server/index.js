@@ -19,7 +19,6 @@ connectDb();
 
 // Routes
 app.get("/", (req, res) => {
-  console.log(req.body);
   res.json({ msg: "hello" });
 });
 
