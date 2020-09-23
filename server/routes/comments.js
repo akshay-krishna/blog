@@ -53,7 +53,7 @@ router.get(":/cid", async (req, res) => {
 //  update a specific comment
 router.put("/:cid", async (req, res) => {
   const { cid } = req.params;
-  const {commentBody}
+  const { commentBody } = req.body;
   try {
     await Comment.findByIdAndUpdate(id);
   } catch (err) {}
