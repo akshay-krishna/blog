@@ -4,7 +4,7 @@ import connectDb from "./helper/db.js";
 
 // routes
 import post from "./routes/posts.js";
-
+import comment from "./routes/comments.js";
 // Initalizing the app
 const app = express();
 
@@ -23,6 +23,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/post", post);
+app.use("/post/comment", comment);
 
 // Initializing the server
 app.listen(PORT, () => console.log(`listening on port ${PORT}`));

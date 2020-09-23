@@ -4,10 +4,10 @@ import expressValidator from "express-validator";
 
 const { body, validationResult } = expressValidator;
 
-const post = express.Router();
+const router = express.Router();
 
-// get all the posts path-> /post
-post.get("/", async (req, res) => {
+// get all the posts
+router.get("/", async (req, res) => {
   try {
     const posts = await Post.find({});
     res.json(posts);
@@ -16,9 +16,9 @@ post.get("/", async (req, res) => {
     res.sendStatus(500);
   }
 });
-// create a new post path>/post
-// data -> title,body
-post.post(
+
+// create a new post
+router.post(
   "/",
   [body("title").notEmpty(), body("body").notEmpty()],
   async (req, res) => {
@@ -41,11 +41,11 @@ post.post(
   }
 );
 
-// get a specific post path->/post/:id
-post.get("/:id", async (req, res) => {
+// get a specific post
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const post = await Post.findById(id);
+    const post = await Post.findById(id).populate("comments").exec();
     res.json(post);
   } catch (err) {
     console.error(err.message);
@@ -53,8 +53,8 @@ post.get("/:id", async (req, res) => {
   }
 });
 
-// update a specific post path->/post/:id
-post.put(
+// update a specific post
+router.put(
   "/:id",
   [body("title").notEmpty(), body("body").notEmpty()],
   async (req, res) => {
@@ -74,8 +74,8 @@ post.put(
     }
   }
 );
-// delete a specific post path->/post/:id
-post.delete("/:id", async (req, res) => {
+// delete a specific post
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     await Post.findByIdAndDelete(id);
@@ -86,4 +86,4 @@ post.delete("/:id", async (req, res) => {
   }
 });
 
-export default post;
+export default router;
