@@ -1,0 +1,14 @@
+.post {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.post__title {
+  font-size: 26px;
+  margin-bottom: 15px;
+}

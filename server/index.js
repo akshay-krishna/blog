@@ -1,7 +1,7 @@
 // packages
 import express from "express";
 import connectDb from "./helper/db.js";
-
+import cors from "cors";
 // routes
 import post from "./routes/posts.js";
 import comment from "./routes/comments.js";
@@ -10,7 +10,7 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-
+app.use(cors());
 // port
 const { PORT } = process.env;
 
