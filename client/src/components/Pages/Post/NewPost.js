@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
+import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
-import "./newPost.css";
 import { useHistory } from "react-router-dom";
+import { Container } from "@material-ui/core";
+import "./newPost.css";
+
 const NewPost = () => {
   const [post, setPost] = useState({ title: "", body: "" });
   const history = useHistory();
@@ -26,30 +29,34 @@ const NewPost = () => {
   };
   const { title, body } = post;
   return (
-    <div className="newPost">
-      <form onSubmit={onSubmit}>
-        <TextField
-          onChange={onChange}
-          name="title"
-          value={title}
-          placeholder="Title"
-          fullWidth
-          required
-        />
-        <TextField
-          multiline
-          onChange={onChange}
-          name="body"
-          value={body}
-          placeholder="Start writing"
-          fullWidth
-          required
-        />
-        <Button type="submit" fullWidth variant="outlined" color="primary">
-          Submit
-        </Button>
-      </form>
-    </div>
+    <Container className="newPost" maxWidth="md">
+      <Card>
+        <form className="newPost__form" onSubmit={onSubmit}>
+          <TextField
+            onChange={onChange}
+            name="title"
+            value={title}
+            placeholder="Title"
+            fullWidth
+            required
+          />
+          <TextField
+            multiline
+            rows="10"
+            variant="outlined"
+            onChange={onChange}
+            name="body"
+            value={body}
+            fullWidth
+            size="small"
+            required
+          />
+          <Button type="submit" fullWidth variant="outlined" color="primary">
+            Submit
+          </Button>
+        </form>
+      </Card>
+    </Container>
   );
 };
 

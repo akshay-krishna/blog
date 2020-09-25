@@ -1,13 +1,7 @@
-.newPost {
-  width: 60%;
-  margin: 0 auto;
-  margin-top: 10vh;
-  background-color: rgb(255, 255, 255);
-  height: fit-content;
-  border-radius: 10px;
-  padding: 1em 3em;
+.newPost > .MuiCard-root {
+  padding: 2.5em;
 }
-.MuiTextField-root {
-  margin-bottom: 2em !important;
-  margin-top: 2em !important;
+
+.newPost__form > .MuiTextField-root {
+  margin-bottom: 2em;
 }

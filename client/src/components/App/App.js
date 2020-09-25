@@ -18,6 +18,7 @@ function App() {
             <Route exact path="/post" render={() => <Posts />} />
             <Route exact path="/post/new" render={() => <NewPost />} />
             <Route exact path="/post/:id" render={() => <Post />} />
+            <Route exact path="/*" render={() => <Posts />} />
           </Switch>
         </div>
       </div>
