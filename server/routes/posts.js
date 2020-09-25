@@ -9,7 +9,11 @@ const router = express.Router();
 // get all the posts
 router.get("/", async (req, res) => {
   try {
-    const posts = await Post.find({});
+    let posts = await Post.find({});
+    posts = posts.map((post) => {
+      post.body = post.body.slice(1, 200);
+      return post;
+    });
     res.json(posts);
   } catch (err) {
     console.error(err.message);
