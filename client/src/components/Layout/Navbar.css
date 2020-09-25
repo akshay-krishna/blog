@@ -1,0 +1,24 @@
+.navbar__title,
+.MuiTypography-h6 {
+  font-weight: bolder !important;
+}
+
+.MuiTypography-root > a {
+  color: #ffffff !important;
+}
+
+.MuiToolbar-root {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar__links {
+  display: flex;
+  width: fit-content;
+  justify-content: space-around;
+}
+
+.navbar__link {
+  margin-left: 1em !important;
+}

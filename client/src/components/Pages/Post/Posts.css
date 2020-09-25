@@ -1,15 +1,29 @@
-.posts {
-  width: 80%;
-  margin: 0 auto;
-  color: #000000;
-}
-
-.posts__post {
-  margin-bottom: 40px;
-  border: 1px solid #000000;
-}
-
-.posts > a {
+a {
   text-decoration: none;
   color: #000000;
+}
+
+.MuiContainer-root,
+.posts {
+  margin: 0 auto !important;
+  display: flex !important;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.MuiCard-root {
+  margin-bottom: 2em;
+  max-width: 450px;
+}
+
+@media (max-width: 960px) {
+  .MuiContainer-root,
+  .posts {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .MuiCard-root {
+    width: 250px;
+  }
 }

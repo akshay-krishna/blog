@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Container, Typography } from "@material-ui/core";
 import "./Post.css";
 const Post = () => {
   const [post, setPost] = useState({});
@@ -16,12 +17,12 @@ const Post = () => {
   }, []);
   return (
     <div className="post">
-      <div className="post__title">
-        <h1>{post.title}</h1>
-      </div>
-      <div className="post__body">
-        <p>{post.body}</p>
-      </div>
+      <Container maxWidth="md">
+        <Typography variant="h2">{post.title}</Typography>
+        <Typography variant="body1" paragraph>
+          {post.body}
+        </Typography>
+      </Container>
     </div>
   );
 };

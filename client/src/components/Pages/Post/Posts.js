@@ -1,3 +1,11 @@
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Container,
+  Typography,
+} from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Posts.css";
@@ -14,18 +22,25 @@ const Posts = () => {
     })();
   }, []);
   return (
-    <div className="posts">
+    <Container className="posts" maxWidth="md">
       {posts.map((post) => {
         return (
-          <Link to={"/post/" + post._id}>
-            <div className="posts__post">
-              <h1>{post.title}</h1>
-              <p>{post.body}</p>
-            </div>
-          </Link>
+          <Card variant="outlined">
+            <CardContent>
+              <Typography variant="h3">{post.title}</Typography>
+              <Typography variant="body2" paragraph>
+                {post.body}
+              </Typography>
+              <CardActions>
+                <Button color="primary" size="large" href={"/post/" + post._id}>
+                  Read more
+                </Button>
+              </CardActions>
+            </CardContent>
+          </Card>
         );
       })}
-    </div>
+    </Container>
   );
 };
 

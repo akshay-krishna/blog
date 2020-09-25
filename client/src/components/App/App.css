@@ -1,5 +1,8 @@
 .app {
   height: 100vh;
   width: 100%;
+}
 
+.app__content {
+  margin-top: 2em;
 }
