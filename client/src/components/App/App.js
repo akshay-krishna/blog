@@ -6,7 +6,7 @@ import Post from "../Pages/Post/Post";
 import NewPost from "../Pages/Post/NewPost";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Navbar from "../Layout/Navbar";
+import Navbar from "../Navbar/Navbar";
 
 function App() {
   return (

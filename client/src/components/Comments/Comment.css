@@ -1,0 +1,8 @@
+.comment__form > .MuiTextField-root {
+  margin-bottom: 2em !important;
+}
+
+.comment__formButton {
+  display: flex;
+  justify-content: flex-end;
+}

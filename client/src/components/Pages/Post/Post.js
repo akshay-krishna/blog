@@ -1,29 +1,42 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Typography } from "@material-ui/core";
+
+import Comment from "../../Comments/Comment";
 import "./Post.css";
 const Post = () => {
-  const [post, setPost] = useState({});
+  const [body, setBody] = useState("");
+  const [comments, setComments] = useState([]);
+  const [title, setTitle] = useState([]);
   const { id } = useParams();
   useEffect(() => {
-    (async () => {
+    console.log("object");
+    const fetchData = async () => {
       try {
-        const res = await (await fetch("/post/" + id)).json();
-        setPost(res);
+        const { comments, body, title } = await (
+          await fetch("/post/" + id)
+        ).json();
+        setBody(body);
+        setTitle(title);
+        setComments(comments);
       } catch (err) {
         console.error(err.message);
       }
-    })();
+    };
+    fetchData();
   }, []);
   return (
-    <div className="post">
-      <Container maxWidth="md">
-        <Typography variant="h2">{post.title}</Typography>
+    <Fragment>
+      <Container className="post" maxWidth="md">
+        <Typography gutterBottom variant="h2">
+          {title}
+        </Typography>
         <Typography variant="body1" paragraph>
-          {post.body}
+          {body}
         </Typography>
       </Container>
-    </div>
+      <Comment id={id} comments={comments} />
+    </Fragment>
   );
 };
 
