@@ -13,6 +13,9 @@ const Navbar = () => {
             </Typography>
             <div className="navbar__links">
               <Typography align="center" className="navbar__link">
+                <Link to="/login">login</Link>
+              </Typography>
+              <Typography align="center" className="navbar__link">
                 <Link to="/post/new">write a post</Link>
               </Typography>
               <Typography align="center" className="navbar__link">
