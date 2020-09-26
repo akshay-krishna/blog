@@ -13,7 +13,7 @@ body {
   width: 100%;
   height: 100vh;
   background-color: #eaf0f1a1;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 code {

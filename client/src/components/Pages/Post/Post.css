@@ -2,3 +2,49 @@
   color: #2f363f;
   font-weight: bolder;
 }
+
+.post,
+.MuiContainer-maxWidthMd {
+  padding-left: 5em !important;
+  padding-right: 5em !important;
+}
+
+.post__comments > div {
+  height: 150px;
+  margin-bottom: 1em;
+  padding: 1em;
+}
+
+.post__commentsIcons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.post__contents {
+  margin-bottom: 2em;
+}
+
+.post__comments {
+  margin-top: 2em;
+}
+
+.post__contentsIcons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.MuiButton-root .MuiTypography-button {
+  text-transform: lowercase !important;
+}
+
+.post__newComment .MuiTextField-root {
+  margin-bottom: 2em;
+}
+
+.post__newCommentIcon {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}

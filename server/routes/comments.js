@@ -29,10 +29,9 @@ router.post("/:pid", body("commentBody").notEmpty(), async (req, res) => {
   const newComment = new Comment({ commentBody });
   try {
     const savedComment = await newComment.save();
-    const savedPost = await Post.findById(pid);
+    const savedPost = await Post.findById(pid).populate("comments").exec();
     savedPost.comments.unshift(savedComment);
-    await savedPost.save();
-    res.sendStatus(200);
+    res.json(await savedPost.save());
   } catch (err) {
     console.error(err.message);
     res.sendStatus(500);
