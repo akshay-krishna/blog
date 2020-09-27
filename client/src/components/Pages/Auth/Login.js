@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Login.css";
 
 import {
@@ -9,9 +9,12 @@ import {
   Typography,
 } from "@material-ui/core";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { UserContext } from "../../../context/userContext";
 
 const Login = () => {
+  const { dispatch } = useContext(UserContext);
+  const history = useHistory();
   const [cred, setCred] = useState({ email: "", password: "" });
   const onChange = (e) => {
     setCred({ ...cred, [e.target.name]: e.target.value });
@@ -19,6 +22,8 @@ const Login = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    history.push("/");
   };
 
   const { email, password } = cred;

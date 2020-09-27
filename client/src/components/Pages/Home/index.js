@@ -7,7 +7,7 @@ import {
   IconButton,
   Typography,
 } from "@material-ui/core";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
 import ArrowForwardIosOutlinedIcon from "@material-ui/icons/ArrowForwardIosOutlined";
@@ -15,8 +15,10 @@ import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutline
 
 import { Link } from "react-router-dom";
 import "./Posts.css";
-const Posts = () => {
+import { UserContext } from "../../../context/userContext";
+const Home = () => {
   const [posts, setPosts] = useState([]);
+
   useEffect(() => {
     (async () => {
       try {
@@ -66,4 +68,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default Home;

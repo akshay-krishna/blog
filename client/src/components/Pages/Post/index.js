@@ -9,6 +9,7 @@ import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutline
 
 import "./Post.css";
 import Comment from "./Comments/Comment";
+
 const Post = () => {
   const [post, setPost] = useState({
     title: "",
