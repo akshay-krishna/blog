@@ -12,7 +12,7 @@ import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ThumbDownAltOutlinedIcon from "@material-ui/icons/ThumbDownAltOutlined";
 import SendOutlinedIcon from "@material-ui/icons/SendOutlined";
 
-const Comment = ({ id, comments, setPost }) => {
+const Comment = ({ id, comments, setComments }) => {
   const [comment, setComment] = useState({ commentBody: "" });
   const onChange = (e) => {
     setComment({ ...comment, [e.target.name]: e.target.value });
@@ -29,7 +29,8 @@ const Comment = ({ id, comments, setPost }) => {
           body: JSON.stringify(comment),
         })
       ).json();
-      setPost(res);
+      setComments(res);
+      setComment({ ...comment, commentBody: "" });
     } catch (err) {
       console.error(err.message);
     }
@@ -59,7 +60,8 @@ const Comment = ({ id, comments, setPost }) => {
         </form>
       </div>
       <div className="post__comments">
-        {comments.map(({ commentBody, _id, date }) => {
+        {comments.map((comment) => {
+          const { commentBody, _id, date } = comment;
           return (
             <Card key={_id}>
               <Typography color="textSecondary">{date}</Typography>

@@ -13,22 +13,24 @@ const Post = () => {
   const [post, setPost] = useState({
     title: "",
     body: "",
-    comments: [],
   });
+  const [comments, setComments] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const post = await (await fetch("/post/" + id)).json();
+        const { comments } = post;
+        setComments(comments);
         setPost(post);
       } catch (err) {
         console.error(err.message);
       }
     };
     fetchData();
-  }, [id, post.comments.length]);
-  const { body, title, comments } = post;
+  }, [id, comments.length]);
+  const { body, title } = post;
   return (
     <Container className="post" maxWidth="md">
       <div className="post__contents">
@@ -50,7 +52,7 @@ const Post = () => {
           </IconButton>
         </div>
       </div>
-      <Comment setPost={setPost} id={id} comments={comments} />
+      <Comment setComments={setComments} id={id} comments={comments} />
     </Container>
   );
 };
