@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
+  avatar: {
+    type: String,
+  },
   name: {
     type: String,
     required: true,
@@ -14,6 +17,10 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+  },
+  admin: {
+    type: Boolean,
+    default: false,
   },
 });
 

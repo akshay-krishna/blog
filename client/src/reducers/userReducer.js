@@ -1,8 +1,5 @@
 const userReducer = (state, action) => {
-  state = {
-    name: "akshay",
-    age: 20,
-  };
+  state = action;
   return state;
 };
 

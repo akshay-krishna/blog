@@ -5,9 +5,9 @@ import userReducer from "../reducers/userReducer";
 export const UserContext = createContext(null);
 
 const UserContextProvider = ({ children }) => {
-  const [user, dispatch] = useReducer(userReducer, UserContext);
+  const [user, setUser] = useReducer(userReducer, UserContext);
   return (
-    <UserContext.Provider value={{ user, dispatch }}>
+    <UserContext.Provider value={{ user, setUser }}>
       {children}
     </UserContext.Provider>
   );

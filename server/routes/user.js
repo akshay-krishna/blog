@@ -2,6 +2,7 @@ import express from "express";
 import expressValidator from "express-validator";
 import User from "../models/User.js";
 import hash from "../helper/hash.js";
+import token from "../helper/token.js";
 
 const { body, validationResult } = expressValidator;
 const router = express.Router();
@@ -29,17 +30,18 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json(errors.array());
     }
-    const { name, email, password } = req.body;
+
     try {
-      const hashedPassword = await hash(password);
-      const newUser = new User({
+      req.body.password = await hash(req.body.password);
+      const newUser = new User(req.body);
+      const { name, id, avatar, email, admin } = await newUser.save();
+      const jwt = await token(id, email, admin);
+      res.json({
+        "x-auth-token": jwt,
         name,
-        email,
-        password: hashedPassword,
+        id,
+        avatar,
       });
-      const savedUser = await newUser.save();
-      savedUser.password = null;
-      res.json(savedUser);
     } catch (err) {
       if (err.code === 11000) {
         return res.sendStatus(409);

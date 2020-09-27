@@ -13,16 +13,15 @@ import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "../../../context/userContext";
 
 const Login = () => {
-  const { dispatch } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const history = useHistory();
   const [cred, setCred] = useState({ email: "", password: "" });
   const onChange = (e) => {
     setCred({ ...cred, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-
     history.push("/");
   };
 

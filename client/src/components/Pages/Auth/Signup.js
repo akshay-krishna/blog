@@ -5,17 +5,35 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { UserContext } from "../../../context/userContext";
+
 import "./Signup.css";
 
 const Signup = () => {
+  const { setUser } = useContext(UserContext);
   const [cred, setCred] = useState({ name: "", email: "", password: "" });
+  const history = useHistory();
   const onChange = (e) => {
     setCred({ ...cred, [e.target.name]: e.target.value });
   };
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const res = await fetch("/user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(cred),
+      });
+      const jres = await res.json();
+      document.cookie = "token=" + jres["x-auth-token"] + ";path=/;";
+      const { name, avatar, id } = jres;
+      setUser({ name, avatar, id });
+      history.push("/");
+    } catch (err) {
+      console.error(err.message);
+    }
   };
 
   const { name, email, password } = cred;
