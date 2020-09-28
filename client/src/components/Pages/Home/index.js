@@ -14,7 +14,7 @@ import ArrowForwardIosOutlinedIcon from "@material-ui/icons/ArrowForwardIosOutli
 import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutlined";
 
 import { Link } from "react-router-dom";
-import "./Posts.css";
+import "./Home.css";
 import { UserContext } from "../../../context/userContext";
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -33,7 +33,7 @@ const Home = () => {
     <Container className="posts" maxWidth="md">
       {posts.map((post) => {
         return (
-          <Card className="posts__card" variant="elevation">
+          <Card key={post._id} className="posts__card" variant="elevation">
             <CardContent className="posts__cardContent">
               <Typography variant="h3" gutterBottom>
                 <Link className="posts__title" to={"/post/" + post._id}>
@@ -55,9 +55,8 @@ const Home = () => {
                   variant="contained"
                   endIcon={<ArrowForwardIosOutlinedIcon />}
                   size="medium"
-                  href={"/post/" + post._id}
                 >
-                  Read more
+                  <Link to={"/post/" + post._id}>Read more</Link>
                 </Button>
               </CardActions>
             </CardContent>

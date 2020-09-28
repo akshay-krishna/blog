@@ -19,3 +19,8 @@
   display: flex !important;
   justify-content: flex-end;
 }
+
+.MuiButton-root a {
+  text-decoration: none;
+  color: inherit;
+}

@@ -1,16 +1,34 @@
-import React, { useContext } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import {
   AppBar,
   Avatar,
   Container,
+  Menu,
+  MenuItem,
   Toolbar,
   Typography,
 } from "@material-ui/core";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 const Navbar = () => {
+  const history = useHistory();
   const { user } = useContext(UserContext);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const logout = () => {
+    handleClose();
+    history.push("/logout");
+  };
+
   return (
     <div className="navbar">
       <AppBar variant="outlined" color="primary" position="sticky">
@@ -26,13 +44,32 @@ const Navbar = () => {
               <Typography align="center" className="navbar__link">
                 <Link to="/post">post</Link>
               </Typography>
-              {user.avatar ? (
-                <Avatar />
-              ) : (
-                <Typography align="center" className="navbar__link">
+              <Typography align="center" className="navbar__link">
+                {user ? (
+                  <Fragment>
+                    <Avatar
+                      component="span"
+                      aria-controls="simple-menu"
+                      aria-haspopup="true"
+                      onClick={handleClick}
+                    />
+                    <Menu
+                      variant="menu"
+                      id="simple-menu"
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleClose}
+                    >
+                      <MenuItem onClick={handleClose}>Profile</MenuItem>
+                      <MenuItem onClick={handleClose}>My account</MenuItem>
+                      <MenuItem onClick={logout}>Logout</MenuItem>
+                    </Menu>
+                  </Fragment>
+                ) : (
                   <Link to="/login">login</Link>
-                </Typography>
-              )}
+                )}
+              </Typography>
             </div>
           </Toolbar>
         </Container>

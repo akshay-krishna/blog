@@ -12,7 +12,7 @@ import { UserContext } from "../../../context/userContext";
 import "./Signup.css";
 
 const Signup = () => {
-  const { setUser } = useContext(UserContext);
+  const { dispatch } = useContext(UserContext);
   const [cred, setCred] = useState({ name: "", email: "", password: "" });
   const history = useHistory();
   const onChange = (e) => {
@@ -27,9 +27,8 @@ const Signup = () => {
         body: JSON.stringify(cred),
       });
       const jres = await res.json();
-      document.cookie = "token=" + jres["x-auth-token"] + ";path=/;";
       const { name, avatar, id } = jres;
-      setUser({ name, avatar, id });
+      dispatch({ type: "AUTH", data: { name, avatar, id } });
       history.push("/");
     } catch (err) {
       console.error(err.message);

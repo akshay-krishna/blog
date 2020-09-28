@@ -17,9 +17,15 @@
 .navbar__links {
   display: flex;
   width: fit-content;
+  align-items: center;
   justify-content: space-around;
 }
 
 .navbar__link {
   margin-left: 1em !important;
+}
+
+.MuiAvatar-root {
+  width: 35px !important;
+  height: 35px !important;
 }

@@ -13,7 +13,7 @@ import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "../../../context/userContext";
 
 const Login = () => {
-  const { setUser } = useContext(UserContext);
+  const { dispatch } = useContext(UserContext);
   const history = useHistory();
   const [cred, setCred] = useState({ email: "", password: "" });
   const onChange = (e) => {
@@ -22,6 +22,19 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const res = await fetch("/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(cred),
+      });
+      const jres = await res.json();
+      const { name, avatar, id } = jres;
+      dispatch({ type: "AUTH", data: { name, avatar, id } });
+      history.push("/");
+    } catch (err) {
+      console.error(err.message);
+    }
     history.push("/");
   };
 
