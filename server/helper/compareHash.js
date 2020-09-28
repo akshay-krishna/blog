@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 
+// function to compare hashed passwords
 export default async (plainPasswd, hashPasswd) => {
   try {
     return await bcrypt.compare(plainPasswd, hashPasswd);

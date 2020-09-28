@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
 
-const connectDb = async () => {
+// Function to connect to the db
+export default async () => {
   const { DB_PASSWORD, DB_NAME } = process.env;
   const options = {
+    useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
@@ -18,6 +20,3 @@ const connectDb = async () => {
     console.error(err.message);
   }
 };
-
-// module.exports = connectDb;
-export default connectDb;

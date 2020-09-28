@@ -1,7 +1,7 @@
 import express from "express";
 import expressValidator from "express-validator";
 import compareHash from "../helper/compareHash.js";
-import token from "../helper/token.js";
+import tokenGen from "../helper/tokenGen.js";
 import User from "../models/User.js";
 
 const router = express.Router();
@@ -21,10 +21,10 @@ router.post(
       const user = await User.findOne({ email });
       if (await compareHash(password, user.password)) {
         const { id, email, admin, avatar, name } = user;
-        const jwt = await token(id, email, admin);
+        const jwt = await tokenGen({ id, email, admin });
         res.setHeader(
           "Set-Cookie",
-          `x-auth-token=${JSON.stringify(jwt)};HttpOnly`
+          `x-auth-token=${JSON.stringify(jwt)};HttpOnly;path=/`
         );
         return res.json({
           name,

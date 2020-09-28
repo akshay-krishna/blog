@@ -2,7 +2,8 @@ import express from "express";
 import expressValidator from "express-validator";
 import User from "../models/User.js";
 import hash from "../helper/hash.js";
-import token from "../helper/token.js";
+import tokenGen from "../helper/tokenGen.js";
+import auth from "../middleware/auth.js";
 
 const { body, validationResult } = expressValidator;
 const router = express.Router();
@@ -35,7 +36,7 @@ router.post(
       req.body.password = await hash(req.body.password);
       const newUser = new User(req.body);
       const { name, id, avatar, email, admin } = await newUser.save();
-      const jwt = await token(id, email, admin);
+      const jwt = await tokenGen({ id, email, admin });
       res.setHeader(
         "Set-Cookie",
         `x-auth-token=${JSON.stringify(jwt)};HttpOnly`
@@ -55,7 +56,7 @@ router.post(
   }
 );
 //AUTH: Get the user data
-router.get("/:id", async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
   const { id } = req.params;
   try {
     const user = await User.findById(id, "-password");
@@ -68,6 +69,7 @@ router.get("/:id", async (req, res) => {
     res.sendStatus(500);
   }
 });
+
 // AUTH: Update a user
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
