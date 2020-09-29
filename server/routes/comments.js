@@ -68,6 +68,22 @@ router.put("/:cid", auth, async (req, res) => {
     res.sendStatus(500);
   }
 });
-// delete a specific comment
 
+// delete a specific comment
+router.delete("/:pid/:cid", auth, async (req, res) => {
+  const { uid, params } = req;
+  const { cid, pid } = params;
+  try {
+    const { author } = await Comment.findById(cid, "author");
+    if (author != uid) return res.sendStatus(401);
+    await Comment.findByIdAndDelete(cid);
+    let posts = await Post.findById(pid);
+    posts.comments = posts.comments.filter((comment) => comment != cid);
+    await posts.save();
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err.message);
+    res.sendStatus(500);
+  }
+});
 export default router;

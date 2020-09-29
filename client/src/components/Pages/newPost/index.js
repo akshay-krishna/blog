@@ -7,7 +7,7 @@ import { Container } from "@material-ui/core";
 import "./newPost.css";
 
 const NewPost = () => {
-  const [post, setPost] = useState({ title: "", body: "" });
+  const [post, setPost] = useState({ title: "", blogBody: "" });
   const history = useHistory();
 
   const onSubmit = async (e) => {
@@ -27,7 +27,7 @@ const NewPost = () => {
   const onChange = (e) => {
     setPost({ ...post, [e.target.name]: e.target.value });
   };
-  const { title, body } = post;
+  const { title, blogBody } = post;
   return (
     <Container className="newPost" maxWidth="md">
       <Card>
@@ -45,8 +45,8 @@ const NewPost = () => {
             rows="10"
             variant="outlined"
             onChange={onChange}
-            name="body"
-            value={body}
+            name="blogBody"
+            value={blogBody}
             fullWidth
             size="small"
             required

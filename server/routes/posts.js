@@ -97,6 +97,9 @@ router.delete("/:pid", auth, async (req, res) => {
     const { author } = await Post.findById(pid, "author");
     if (uid != author) return res.sendStatus(401);
     await Post.findByIdAndDelete(pid);
+    let user = await User.findById(uid);
+    user.posts = user.posts.filter((post) => post != pid);
+    await user.save();
     res.sendStatus(200);
   } catch (err) {
     console.error(err.message);

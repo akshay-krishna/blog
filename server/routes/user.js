@@ -83,9 +83,9 @@ router.get("/:uid", async (req, res) => {
 
 // Update the authenticated user
 router.put("/", auth, async (req, res) => {
-  const { id } = req.params;
+  const { uid, body } = req;
   try {
-    await User.findByIdAndUpdate(id, req.body);
+    await User.findByIdAndUpdate(uid, body);
     res.sendStatus(200);
   } catch (err) {
     if (err.name === "CastError") {
@@ -98,9 +98,9 @@ router.put("/", auth, async (req, res) => {
 
 // Delete the authenticated user user
 router.delete("/", auth, async (req, res) => {
-  const { id } = req.params;
+  const { uid } = req;
   try {
-    await User.findByIdAndDelete(id);
+    await User.findByIdAndDelete(uid);
     res.sendStatus(200);
   } catch (err) {
     if (err.name === "CastError") {

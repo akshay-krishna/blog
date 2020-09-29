@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const PostSchema = new mongoose.Schema({
   date: {
-    type: Date,
+    type: String,
     required: true,
     default: new Date().toLocaleDateString(),
   },

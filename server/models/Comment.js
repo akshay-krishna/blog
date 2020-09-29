@@ -6,9 +6,9 @@ const CommentSchema = new mongoose.Schema({
     ref: "users",
   },
   date: {
-    type: Date,
-    required: true,
+    type: String,
     default: new Date().toLocaleDateString(),
+    required: true,
   },
   commentBody: {
     type: String,
