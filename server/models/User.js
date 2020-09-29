@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
+  date: {
+    type: Date,
+    required: true,
+    default: new Date().toLocaleDateString(),
+  },
+
   avatar: {
     type: String,
   },
@@ -18,10 +24,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  admin: {
-    type: Boolean,
-    default: false,
-  },
+  posts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "posts",
+    },
+  ],
 });
 
 export default mongoose.model("users", UserSchema);

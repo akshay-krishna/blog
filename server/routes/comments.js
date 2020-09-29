@@ -3,6 +3,7 @@ import express from "express";
 import Comment from "../models/Comment.js";
 import Post from "../models/Post.js";
 import expressValidator from "express-validator";
+import auth from "../middleware/auth.js";
 
 const router = express.Router();
 const { body, validationResult } = expressValidator;
@@ -13,26 +14,6 @@ router.get("/:pid", async (req, res) => {
   try {
     const posts = await Post.findById(pid, "comments");
     res.json(posts);
-  } catch (err) {
-    console.error(err.message);
-    res.sendStatus(500);
-  }
-});
-// create a comment
-router.post("/:pid", body("commentBody").notEmpty(), async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json(errors.array());
-  }
-  const { pid } = req.params;
-  const { commentBody } = req.body;
-  const newComment = new Comment({ commentBody });
-  try {
-    const savedComment = await newComment.save();
-    const savedPost = await Post.findById(pid).populate("comments").exec();
-    savedPost.comments.unshift(savedComment);
-    const { comments } = await savedPost.save();
-    res.json(comments);
   } catch (err) {
     console.error(err.message);
     res.sendStatus(500);
@@ -50,13 +31,42 @@ router.get(":/cid", async (req, res) => {
     res.sendStatus(500);
   }
 });
-//  update a specific comment
-router.put("/:cid", async (req, res) => {
-  const { cid } = req.params;
-  const { commentBody } = req.body;
+// create a comment
+router.post("/:pid", auth, body("commentBody").notEmpty(), async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json(errors.array());
+  }
+  const { params, uid, body } = req;
+  const { commentBody } = body;
+  const { pid } = params;
+  const newComment = new Comment({ commentBody, author: uid });
   try {
-    await Comment.findByIdAndUpdate(id);
-  } catch (err) {}
+    const savedComment = await newComment.save();
+    const savedPost = await Post.findById(pid).populate("comments").exec();
+    savedPost.comments.unshift(savedComment);
+    await savedPost.save();
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err.message);
+    res.sendStatus(500);
+  }
+});
+
+//  update a specific comment
+router.put("/:cid", auth, async (req, res) => {
+  const { params, uid, body } = req;
+  const { cid } = params;
+  const { commentBody } = body;
+  try {
+    const { author } = await Comment.findById(cid, "author");
+    if (author != uid) return res.sendStatus(401);
+    await Comment.findByIdAndUpdate(cid, { commentBody });
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err.message);
+    res.sendStatus(500);
+  }
 });
 // delete a specific comment
 

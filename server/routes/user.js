@@ -35,7 +35,7 @@ router.post(
     try {
       req.body.password = await hash(req.body.password);
       const newUser = new User(req.body);
-      const { name, id, avatar, email, admin } = await newUser.save();
+      const { name, id, avatar, email, admin, date } = await newUser.save();
       const jwt = await tokenGen({ id, email, admin });
       res.setHeader(
         "Set-Cookie",
@@ -43,6 +43,7 @@ router.post(
       );
       res.json({
         name,
+        date,
         id,
         avatar,
       });
@@ -55,12 +56,22 @@ router.post(
     }
   }
 );
-//AUTH: Get the user data
-router.get("/:id", auth, async (req, res) => {
-  const { id } = req.params;
+
+// Get the user data
+router.get("/:uid", async (req, res) => {
+  const { uid } = req.params;
   try {
-    const user = await User.findById(id, "-password");
-    res.json(user);
+    const { date, email, name, id, posts } = await User.findById(
+      uid,
+      "-password"
+    ).populate("posts");
+    res.json({
+      date,
+      email,
+      name,
+      id,
+      posts,
+    });
   } catch (err) {
     if (err.name === "CastError") {
       return res.sendStatus(404);
@@ -70,8 +81,8 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
-// AUTH: Update a user
-router.put("/:id", async (req, res) => {
+// Update the authenticated user
+router.put("/", auth, async (req, res) => {
   const { id } = req.params;
   try {
     await User.findByIdAndUpdate(id, req.body);
@@ -84,8 +95,9 @@ router.put("/:id", async (req, res) => {
     res.sendStatus(500);
   }
 });
-// AUTH: Delete a user
-router.delete("/:id", async (req, res) => {
+
+// Delete the authenticated user user
+router.delete("/", auth, async (req, res) => {
   const { id } = req.params;
   try {
     await User.findByIdAndDelete(id);

@@ -1,13 +1,22 @@
 import mongoose from "mongoose";
 
 const PostSchema = new mongoose.Schema({
+  date: {
+    type: Date,
+    required: true,
+    default: new Date().toLocaleDateString(),
+  },
   title: {
     type: String,
     required: true,
   },
-  body: {
+  blogBody: {
     type: String,
     required: true,
+  },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
   },
   comments: [
     {
