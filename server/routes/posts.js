@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
   try {
     let posts = await Post.find({});
     posts = posts.map((post) => {
-      post.body = post.blogBody.slice(1, 200);
+      post.blogBody = post.blogBody.slice(1, 200);
       return post;
     });
     res.json(posts);

@@ -31,38 +31,36 @@ const Home = () => {
   }, []);
   return (
     <Container className="posts" maxWidth="md">
-      {posts.map((post) => {
-        return (
-          <Card key={post._id} className="posts__card" variant="elevation">
-            <CardContent className="posts__cardContent">
-              <Typography variant="h3" gutterBottom>
-                <Link className="posts__title" to={"/post/" + post._id}>
-                  {post.title}
-                </Link>
-              </Typography>
-              <Typography align="justify" variant="body2" color="textSecondary">
-                {post.body}
-              </Typography>
-              <CardActions className="posts__cardAction">
-                <IconButton>
-                  <ShareOutlinedIcon />
-                </IconButton>
-                <IconButton>
-                  <BookmarkBorderOutlinedIcon />
-                </IconButton>
-                <Button
-                  disableElevation
-                  variant="contained"
-                  endIcon={<ArrowForwardIosOutlinedIcon />}
-                  size="medium"
-                >
-                  <Link to={"/post/" + post._id}>Read more</Link>
-                </Button>
-              </CardActions>
-            </CardContent>
-          </Card>
-        );
-      })}
+      {posts.map((post) => (
+        <Card key={post._id} className="posts__card" variant="elevation">
+          <CardContent className="posts__cardContent">
+            <Typography variant="h3" color="textSecondary" gutterBottom>
+              <Link className="posts__title" to={"/post/" + post._id}>
+                {post.title}
+              </Link>
+            </Typography>
+            <Typography align="justify" variant="body2" color="textSecondary">
+              {post.blogBody}
+            </Typography>
+            <CardActions className="posts__cardAction">
+              <IconButton>
+                <ShareOutlinedIcon />
+              </IconButton>
+              <IconButton>
+                <BookmarkBorderOutlinedIcon />
+              </IconButton>
+              <Button
+                disableElevation
+                variant="contained"
+                endIcon={<ArrowForwardIosOutlinedIcon />}
+                size="medium"
+              >
+                <Link to={"/post/" + post._id}>Read more</Link>
+              </Button>
+            </CardActions>
+          </CardContent>
+        </Card>
+      ))}
     </Container>
   );
 };

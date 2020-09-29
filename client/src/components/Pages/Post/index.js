@@ -13,7 +13,7 @@ import Comment from "./Comments/Comment";
 const Post = () => {
   const [post, setPost] = useState({
     title: "",
-    body: "",
+    blogBody: "",
   });
   const [comments, setComments] = useState([]);
   const { id } = useParams();
@@ -31,7 +31,7 @@ const Post = () => {
     };
     fetchData();
   }, [id, comments.length]);
-  const { body, title } = post;
+  const { blogBody, title } = post;
   return (
     <Container className="post" maxWidth="md">
       <div className="post__contents">
@@ -39,17 +39,17 @@ const Post = () => {
           {title}
         </Typography>
         <Typography variant="body1" paragraph align="justify">
-          {body}
+          {blogBody}
         </Typography>
         <div className="post__contentsIcons">
           <IconButton>
-            <ShareOutlinedIcon fontSize="large" />
+            <ShareOutlinedIcon />
           </IconButton>
           <IconButton>
-            <BookmarkBorderOutlinedIcon fontSize="large" />
+            <BookmarkBorderOutlinedIcon />
           </IconButton>
           <IconButton>
-            <ThumbUpAltOutlinedIcon fontSize="large" />
+            <ThumbUpAltOutlinedIcon />
           </IconButton>
         </div>
       </div>

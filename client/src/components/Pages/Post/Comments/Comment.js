@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 
 import {
   Card,
@@ -11,8 +11,10 @@ import {
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ThumbDownAltOutlinedIcon from "@material-ui/icons/ThumbDownAltOutlined";
 import SendOutlinedIcon from "@material-ui/icons/SendOutlined";
-
+import { UserContext } from "../../../../context/userContext";
 const Comment = ({ id, comments, setComments }) => {
+  const { user } = useContext(UserContext);
+  const btnDisable = user ? false : true;
   const [comment, setComment] = useState({ commentBody: "" });
   const onChange = (e) => {
     setComment({ ...comment, [e.target.name]: e.target.value });
@@ -20,7 +22,6 @@ const Comment = ({ id, comments, setComments }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const res = await (
         await fetch("/post/comment/" + id, {
@@ -29,10 +30,10 @@ const Comment = ({ id, comments, setComments }) => {
           body: JSON.stringify(comment),
         })
       ).json();
+
       setComments(res);
-      setComment({ ...comment, commentBody: "" });
     } catch (err) {
-      console.error(err.message);
+      console.error(err);
     }
   };
   const { commentBody } = comment;
@@ -61,27 +62,19 @@ const Comment = ({ id, comments, setComments }) => {
       </div>
       <div className="post__comments">
         {comments.map((comment) => {
-          const { commentBody, _id, date } = comment;
+          const { commentBody, _id, date, author } = comment;
           return (
             <Card key={_id}>
-              <Typography color="textSecondary">{date}</Typography>
+              <Typography variant="subtitle2" color="textSecondary">
+                {date}
+              </Typography>
               <Typography color="textPrimary">{commentBody}</Typography>
               <div className="post__commentsIcons">
-                <Button
-                  variant="text"
-                  disableRipple
-                  disableFocusRipple
-                  disableTouchRipple
-                  size="small"
-                >
-                  <Typography variant="button" color="textSecondary">
-                    reply
-                  </Typography>
-                </Button>
-                <IconButton>
+                <AdminBtn user={user} author={author} />
+                <IconButton disabled={btnDisable}>
                   <ThumbUpAltOutlinedIcon fontSize="small" />
                 </IconButton>
-                <IconButton>
+                <IconButton disabled={btnDisable}>
                   <ThumbDownAltOutlinedIcon fontSize="small" />
                 </IconButton>
               </div>
@@ -91,6 +84,28 @@ const Comment = ({ id, comments, setComments }) => {
       </div>
     </Fragment>
   );
+};
+
+const AdminBtn = ({ user, author }) => {
+  if (!user) return null;
+  if (user.id === author) {
+    return (
+      <Fragment>
+        <Button variant="text" size="small">
+          <Typography variant="button" color="error">
+            delete
+          </Typography>
+        </Button>
+        <Button variant="text" size="small">
+          <Typography variant="button" color="primary">
+            update
+          </Typography>
+        </Button>
+      </Fragment>
+    );
+  } else {
+    return null;
+  }
 };
 
 export default Comment;
