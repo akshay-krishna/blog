@@ -22,9 +22,11 @@ router.post(
       if (await compareHash(password, user.password)) {
         const { id, email, admin, avatar, name } = user;
         const jwt = await tokenGen({ id, email, admin });
+        const d = new Date();
+        d.setTime(d.getTime() + 3600000);
         res.setHeader(
           "Set-Cookie",
-          `x-auth-token=${JSON.stringify(jwt)};HttpOnly;path=/`
+          `x-auth-token=${JSON.stringify(jwt)};HttpOnly;path=/;expires=${d};`
         );
         return res.json({
           name,
@@ -45,6 +47,5 @@ router.post("/logout", async (req, res) => {
   res.cookie = null;
   res.sendStatus(200);
 });
-
 
 export default router;

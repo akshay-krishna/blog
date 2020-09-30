@@ -37,9 +37,11 @@ router.post(
       const newUser = new User(req.body);
       const { name, id, avatar, email, admin, date } = await newUser.save();
       const jwt = await tokenGen({ id, email, admin });
+      const d = new Date();
+      d.setTime(d.getTime() + 3600000);
       res.setHeader(
         "Set-Cookie",
-        `x-auth-token=${JSON.stringify(jwt)};HttpOnly`
+        `x-auth-token=${JSON.stringify(jwt)};HttpOnly;expires=${d};`
       );
       res.json({
         name,
