@@ -12,8 +12,10 @@ const { body, validationResult } = expressValidator;
 router.get("/:pid", async (req, res) => {
   const { pid } = req.params;
   try {
-    const posts = await Post.findById(pid, "comments");
-    res.json(posts);
+    const comments = await Post.findById(pid, "comments")
+      .populate("comments")
+      .exec();
+    res.json(comments);
   } catch (err) {
     console.error(err.message);
     res.sendStatus(500);
@@ -54,7 +56,7 @@ router.post("/:pid", auth, body("commentBody").notEmpty(), async (req, res) => {
 });
 
 //  update a specific comment
-router.put("/:cid", auth, async (req, res) => {
+router.put("/:pid/:cid", auth, async (req, res) => {
   const { params, uid, body } = req;
   const { cid } = params;
   const { commentBody } = body;

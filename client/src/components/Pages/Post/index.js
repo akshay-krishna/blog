@@ -16,12 +16,12 @@ const Post = () => {
     blogBody: "",
   });
   const [comments, setComments] = useState([]);
-  const { id } = useParams();
+  const { pid } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const post = await (await fetch("/post/" + id)).json();
+        const post = await (await fetch("/post/" + pid)).json();
         const { comments } = post;
         setComments(comments);
         setPost(post);
@@ -30,7 +30,7 @@ const Post = () => {
       }
     };
     fetchData();
-  }, [id, comments.length]);
+  }, [pid, comments.length]);
   const { blogBody, title } = post;
   return (
     <Container className="post" maxWidth="md">
@@ -53,7 +53,7 @@ const Post = () => {
           </IconButton>
         </div>
       </div>
-      <Comment setComments={setComments} id={id} comments={comments} />
+      <Comment setComments={setComments} pid={pid} comments={comments} />
     </Container>
   );
 };

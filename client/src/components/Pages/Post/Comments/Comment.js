@@ -12,7 +12,7 @@ import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ThumbDownAltOutlinedIcon from "@material-ui/icons/ThumbDownAltOutlined";
 import SendOutlinedIcon from "@material-ui/icons/SendOutlined";
 import { UserContext } from "../../../../context/userContext";
-const Comment = ({ id, comments, setComments }) => {
+const Comment = ({ pid, comments, setComments }) => {
   const { user } = useContext(UserContext);
   const btnDisable = user ? false : true;
   const [comment, setComment] = useState({ commentBody: "" });
@@ -24,13 +24,13 @@ const Comment = ({ id, comments, setComments }) => {
     e.preventDefault();
     try {
       const res = await (
-        await fetch("/post/comment/" + id, {
+        await fetch("/post/comment/" + pid, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(comment),
         })
       ).json();
-
+      setComment({ ...comment, commentBody: "" });
       setComments(res);
     } catch (err) {
       console.error(err);
@@ -70,7 +70,13 @@ const Comment = ({ id, comments, setComments }) => {
               </Typography>
               <Typography color="textPrimary">{commentBody}</Typography>
               <div className="post__commentsIcons">
-                <AdminBtn user={user} author={author} />
+                <AdminBtn
+                  setComments={setComments}
+                  pid={pid}
+                  cid={_id}
+                  user={user}
+                  author={author}
+                />
                 <IconButton disabled={btnDisable}>
                   <ThumbUpAltOutlinedIcon fontSize="small" />
                 </IconButton>
@@ -86,22 +92,28 @@ const Comment = ({ id, comments, setComments }) => {
   );
 };
 
-const AdminBtn = ({ user, author }) => {
+const AdminBtn = ({ user, setComments, author, pid, cid }) => {
+  const onClick = async () => {
+    try {
+      await fetch(`/post/comment/${pid}/${cid}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+      const res = await fetch("/post/comment/" + pid);
+      const { comments } = await res.json();
+      setComments(comments);
+    } catch (err) {
+      console.error(err);
+    }
+  };
   if (!user) return null;
   if (user.id === author) {
     return (
-      <Fragment>
-        <Button variant="text" size="small">
-          <Typography variant="button" color="error">
-            delete
-          </Typography>
-        </Button>
-        <Button variant="text" size="small">
-          <Typography variant="button" color="primary">
-            update
-          </Typography>
-        </Button>
-      </Fragment>
+      <Button variant="text" onClick={onClick} size="small">
+        <Typography variant="button" color="error">
+          delete
+        </Typography>
+      </Button>
     );
   } else {
     return null;

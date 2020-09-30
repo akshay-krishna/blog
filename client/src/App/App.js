@@ -20,7 +20,7 @@ function App() {
           <Switch>
             <Route exact path="/post" render={() => <Home />} />
             <Route exact path="/post/new" render={() => <NewPost />} />
-            <Route exact path="/post/:id" render={() => <Post />} />
+            <Route exact path="/post/:pid" render={() => <Post />} />
             <Route exact path="/login" render={() => <Login />} />
             <Route exact path="/signup" render={() => <Signup />} />
             <Route exact path="/logout" render={() => <Logout />} />
