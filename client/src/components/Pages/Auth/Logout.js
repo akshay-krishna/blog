@@ -12,7 +12,7 @@ const Logout = () => {
           headers: { "Content-Type": "application/json" },
         });
         dispatch({ type: "LOGOUT" });
-        window.location.reload();
+        window.location = "/";
       } catch (err) {
         console.error(err.message);
       }

@@ -39,12 +39,6 @@ const Navbar = () => {
             </Typography>
             <div className="navbar__links">
               <Typography align="center" className="navbar__link">
-                <Link to="/post/new">write a post</Link>
-              </Typography>
-              <Typography align="center" className="navbar__link">
-                <Link to="/post">post</Link>
-              </Typography>
-              <Typography align="center" className="navbar__link">
                 {user ? (
                   <Fragment>
                     <Avatar
@@ -62,7 +56,12 @@ const Navbar = () => {
                       onClose={handleClose}
                     >
                       <MenuItem onClick={handleClose}>Profile</MenuItem>
-                      <MenuItem onClick={handleClose}>My account</MenuItem>
+                      <MenuItem onClick={handleClose}>
+                        <Link to="/post/new">write a post</Link>
+                      </MenuItem>
+                      <MenuItem>
+                        <Link to="/post">post</Link>
+                      </MenuItem>
                       <MenuItem onClick={logout}>Logout</MenuItem>
                     </Menu>
                   </Fragment>

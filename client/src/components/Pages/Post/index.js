@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import { Button, Container, Typography } from "@material-ui/core";
 
@@ -39,20 +39,44 @@ const Post = () => {
         <Typography variant="body1" paragraph align="justify">
           {blogBody}
         </Typography>
-        {author?._id === user?.id ? (
-          <div className="post__contentsIcons">
-            <Button variant="contained" color="secondary">
-              Delete
-            </Button>
-            <Button color="primary" variant="contained">
-              Update
-            </Button>
-          </div>
-        ) : null}
+        <OwnerBtn author={author} pid={pid} user={user} />
       </div>
       <Comment setComments={setComments} pid={pid} comments={comments} />
     </Container>
   );
+};
+
+const OwnerBtn = ({ author, user, pid }) => {
+  const history = useHistory();
+  const onClick = async (method) => {
+    try {
+      fetch("/post/" + pid, {
+        method: method,
+        headers: { "Content-Type": "application/json" },
+      });
+      history.goBack();
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+  return author?._id === user?.id ? (
+    <div className="post__contentsIcons">
+      <Button
+        onClick={() => onClick("DELETE")}
+        variant="contained"
+        color="secondary"
+      >
+        Delete
+      </Button>
+      <Button
+        onClick={() => history.push(`/post/${pid}/update`)}
+        color="primary"
+        variant="contained"
+      >
+        Update
+      </Button>
+    </div>
+  ) : null;
 };
 
 export default Post;

@@ -29,7 +29,7 @@ const Signup = () => {
       const jres = await res.json();
       const { name, avatar, id } = jres;
       dispatch({ type: "AUTH", data: { name, avatar, id } });
-      history.goBack();
+      window.location = "/";
     } catch (err) {
       console.error(err.message);
     }
