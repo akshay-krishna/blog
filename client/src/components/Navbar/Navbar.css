@@ -3,6 +3,11 @@
   font-weight: bolder !important;
 }
 
+.navbar__title > a {
+  text-decoration: none;
+  color: #fff;
+}
+
 .MuiMenuItem-root a {
   text-decoration: none;
   color: #000000 !important;

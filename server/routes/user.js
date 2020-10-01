@@ -67,6 +67,9 @@ router.get("/:uid", async (req, res) => {
       uid,
       "-password"
     ).populate("posts");
+    posts.map((post) => {
+      post.blogBody = post.blogBody.slice(1, 200);
+    });
     res.json({
       date,
       email,
@@ -83,7 +86,7 @@ router.get("/:uid", async (req, res) => {
   }
 });
 
-// Update the authenticated user
+// Update the authenticated
 router.put("/", auth, async (req, res) => {
   const { uid, body } = req;
   try {
@@ -103,6 +106,8 @@ router.delete("/", auth, async (req, res) => {
   const { uid } = req;
   try {
     await User.findByIdAndDelete(uid);
+    res.clearCookie("x-auth-token");
+    res.cookie = null;
     res.sendStatus(200);
   } catch (err) {
     if (err.name === "CastError") {

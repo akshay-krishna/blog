@@ -35,7 +35,7 @@ const Navbar = () => {
         <Container>
           <Toolbar variant="dense">
             <Typography className="navbar__title" variant="h6" align="center">
-              Blog
+              <Link to="/">Blog</Link>
             </Typography>
             <div className="navbar__links">
               <Typography align="center" className="navbar__link">
@@ -55,7 +55,9 @@ const Navbar = () => {
                       open={Boolean(anchorEl)}
                       onClose={handleClose}
                     >
-                      <MenuItem onClick={handleClose}>Profile</MenuItem>
+                      <MenuItem onClick={handleClose}>
+                        <Link to="/dashboard">Profile</Link>
+                      </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Link to="/post/new">write a post</Link>
                       </MenuItem>

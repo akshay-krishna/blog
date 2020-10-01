@@ -10,10 +10,9 @@ const router = express.Router();
 // get all the posts
 router.get("/", async (req, res) => {
   try {
-    let posts = await Post.find({});
-    posts = posts.map((post) => {
+    const posts = await Post.find({});
+    posts.map((post) => {
       post.blogBody = post.blogBody.slice(1, 200);
-      return post;
     });
     res.json(posts);
   } catch (err) {

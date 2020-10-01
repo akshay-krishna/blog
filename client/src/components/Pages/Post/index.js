@@ -39,7 +39,7 @@ const Post = () => {
         <Typography variant="body1" paragraph align="justify">
           {blogBody}
         </Typography>
-        <OwnerBtn author={author} pid={pid} user={user} />
+        {user ? <OwnerBtn author={author} pid={pid} user={user} /> : null}
       </div>
       <Comment setComments={setComments} pid={pid} comments={comments} />
     </Container>
@@ -78,5 +78,5 @@ const OwnerBtn = ({ author, user, pid }) => {
     </div>
   ) : null;
 };
-
+export { OwnerBtn };
 export default Post;
