@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Container, IconButton, Typography } from "@material-ui/core";
-
-import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
-import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
-import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutlined";
+import { Button, Container, Typography } from "@material-ui/core";
 
 import "./Post.css";
 import Comment from "./Comments/Comment";
+import { UserContext } from "../../../context/userContext";
 
 const Post = () => {
+  const { user } = useContext(UserContext);
   const [post, setPost] = useState({
     title: "",
     blogBody: "",
@@ -31,7 +29,7 @@ const Post = () => {
     };
     fetchData();
   }, [pid, comments.length]);
-  const { blogBody, title } = post;
+  const { blogBody, title, author } = post;
   return (
     <Container className="post" maxWidth="md">
       <div className="post__contents">
@@ -41,17 +39,16 @@ const Post = () => {
         <Typography variant="body1" paragraph align="justify">
           {blogBody}
         </Typography>
-        <div className="post__contentsIcons">
-          <IconButton>
-            <ShareOutlinedIcon />
-          </IconButton>
-          <IconButton>
-            <BookmarkBorderOutlinedIcon />
-          </IconButton>
-          <IconButton>
-            <ThumbUpAltOutlinedIcon />
-          </IconButton>
-        </div>
+        {author?._id === user?.id ? (
+          <div className="post__contentsIcons">
+            <Button variant="contained" color="secondary">
+              Delete
+            </Button>
+            <Button color="primary" variant="contained">
+              Update
+            </Button>
+          </div>
+        ) : null}
       </div>
       <Comment setComments={setComments} pid={pid} comments={comments} />
     </Container>

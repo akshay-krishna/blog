@@ -42,11 +42,13 @@ const Comment = ({ pid, comments, setComments }) => {
       <div className="post__newComment">
         <form onSubmit={onSubmit}>
           <TextField
+            variant="outlined"
             onChange={onChange}
             name="commentBody"
             value={commentBody}
             fullWidth
             multiline
+            placeholder="Leave a reply..."
           />
           <div className="post__newCommentIcon">
             <Button

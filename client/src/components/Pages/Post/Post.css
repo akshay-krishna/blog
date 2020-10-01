@@ -35,6 +35,9 @@
   justify-content: flex-end;
 }
 
+.post__contentsIcons > .MuiButton-root {
+  margin-right: 1em;
+}
 .MuiButton-root .MuiTypography-button {
   text-transform: lowercase !important;
 }

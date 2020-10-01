@@ -9,9 +9,7 @@ import {
 } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 
-import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
 import ArrowForwardIosOutlinedIcon from "@material-ui/icons/ArrowForwardIosOutlined";
-import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutlined";
 
 import { Link } from "react-router-dom";
 import "./Home.css";
@@ -43,12 +41,6 @@ const Home = () => {
               {post.blogBody}
             </Typography>
             <CardActions className="posts__cardAction">
-              <IconButton>
-                <ShareOutlinedIcon />
-              </IconButton>
-              <IconButton>
-                <BookmarkBorderOutlinedIcon />
-              </IconButton>
               <Button
                 disableElevation
                 variant="contained"
